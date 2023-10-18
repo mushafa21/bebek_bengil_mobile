@@ -5,13 +5,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mailto/mailto.dart';
 import 'package:profil_resto/styles/custom_color.dart';
 import 'package:profil_resto/styles/custom_text_style.dart';
+import 'package:profil_resto/ui/detail_menu/detail_menu_view.dart';
 import 'package:profil_resto/ui/home/component/business_hours_item.dart';
 import 'package:profil_resto/ui/home/component/menu_item.dart';
 import 'package:profil_resto/ui/home/component/slider.dart';
-import 'package:profil_resto/ui/model/business_hours_model.dart';
-import 'package:profil_resto/ui/model/menu_model.dart';
 import 'package:profil_resto/widget/custom_grid_view.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../model/business_hours_model.dart';
+import '../../model/menu_model.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -30,10 +32,10 @@ class HomePage extends StatelessWidget {
 
 
     final List<MenuModel> menuList = [
-      MenuModel(name: "Balinese Smoked Duck", desc: "Bebek Utuh Diasap Secara Tradisional Dengan Bumbu Dibalut Daun Kacang Beatle. Makanan Ini Disajikan Dengan Sate Bali, Sayuran, Nasi Kukus Dan Disertai Jus Buah Campur. (Makanan Ini Untuk 2 Orang)", image: "https://bebekbengil.co.id/assets/front/images/balinese-smoked-duck-at-bebek-bengil-gmW.jpeg"),
-      MenuModel(name: "Indonesian Rijstafel", desc: "Makanan Tradisional Indonesia Beras Saffron, Sate Bali, Kari Telur, Kari Ayam Bali, Ayam Jahe, Bebek Goreng Renyah, Sayuran Bali (Lawar) Dan Semua Hiasan Dengan Campuran Jus Buah, Pie Krim Kelapa Dan Buah Bali Tropis", image: "https://bebekbengil.co.id/assets/front/images/indonesian-rijstafel-at-bebek-bengil-61u.jpeg"),
-      MenuModel(name: "Bakso Bebek Bengil", desc: "Bakso daging bebek, sayuran hijau dan sambal", image: "https://bebekbengil.co.id/assets/front/images/bakso-bebek-bengil-at-bebek-bengil-Bdu.jpeg"),
-      MenuModel(name: "Fresh Grilled Sea Food", desc: "Udang, Cumi Dan Kakap Disajikan Dengan Mentega Bawang Putih Dan Saus Cabai", image: "https://bebekbengil.co.id/assets/front/images/fresh-grilled-sea-food-at-bebek-bengil-Jir.jpeg"),
+      MenuModel(name: "Balinese Smoked Duck", desc: "Bebek Utuh Diasap Secara Tradisional Dengan Bumbu Dibalut Daun Kacang Beatle. Makanan Ini Disajikan Dengan Sate Bali, Sayuran, Nasi Kukus Dan Disertai Jus Buah Campur. (Makanan Ini Untuk 2 Orang)", image: "https://bebekbengil.co.id/assets/front/images/balinese-smoked-duck-at-bebek-bengil-gmW.jpeg",price: 25000),
+      MenuModel(name: "Indonesian Rijstafel", desc: "Makanan Tradisional Indonesia Beras Saffron, Sate Bali, Kari Telur, Kari Ayam Bali, Ayam Jahe, Bebek Goreng Renyah, Sayuran Bali (Lawar) Dan Semua Hiasan Dengan Campuran Jus Buah, Pie Krim Kelapa Dan Buah Bali Tropis", image: "https://bebekbengil.co.id/assets/front/images/indonesian-rijstafel-at-bebek-bengil-61u.jpeg",price: 13500),
+      MenuModel(name: "Bakso Bebek Bengil", desc: "Bakso daging bebek, sayuran hijau dan sambal", image: "https://bebekbengil.co.id/assets/front/images/bakso-bebek-bengil-at-bebek-bengil-Bdu.jpeg",price: 20000),
+      MenuModel(name: "Fresh Grilled Sea Food", desc: "Udang, Cumi Dan Kakap Disajikan Dengan Mentega Bawang Putih Dan Saus Cabai", image: "https://bebekbengil.co.id/assets/front/images/fresh-grilled-sea-food-at-bebek-bengil-Jir.jpeg",price: 18250),
     ];
 
     final List<BusinessHoursModel> businessHoursList = [
@@ -235,9 +237,20 @@ class HomePage extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10.h,),
-          CustomGridView(itemCount: menuList.length, itemBuilder: (context,index){
-            return MenuItem(data: menuList[index]);
-          }, axisCount: 2,margin: 10.w,physics: NeverScrollableScrollPhysics(),)
+          ListView.builder(itemBuilder: (context,index){
+            return InkWell(
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=> DetailMenuPage(menu: menuList[index])));
+                },
+                child: MenuItem(data: menuList[index]));
+          },itemCount: menuList.length,shrinkWrap: true,physics: NeverScrollableScrollPhysics(),),
+          // CustomGridView(itemCount: menuList.length, itemBuilder: (context,index){
+          //   return InkWell(
+          //     onTap: (){
+          //       Navigator.of(context).push(MaterialPageRoute(builder: (context)=> DetailMenuPage(menu: menuList[index])));
+          //     },
+          //       child: MenuItem(data: menuList[index]));
+          // }, axisCount: 2,margin: 10.w,physics: NeverScrollableScrollPhysics(),)
         ],
       );
     }
@@ -259,9 +272,8 @@ class HomePage extends StatelessWidget {
               SizedBox(height: 10.h,),
               viewContact(),
               SizedBox(height: 20.h,),
-              viewDescription(),
-              SizedBox(height: 20.h,),
               viewMenu(),
+              viewDescription(),
               SizedBox(height: 20.h,),
               viewAlamat(),
               SizedBox(height: 20.h,),

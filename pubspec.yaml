@@ -43,6 +43,7 @@ dependencies:
   mailto: ^2.0.0
   cached_network_image: ^3.2.3
   carousel_slider: ^4.0.0
+  intl: ^0.18.1
 
 
 

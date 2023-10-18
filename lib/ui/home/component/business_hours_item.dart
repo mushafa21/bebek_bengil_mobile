@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:profil_resto/styles/custom_color.dart';
 import 'package:profil_resto/styles/custom_text_style.dart';
-import 'package:profil_resto/ui/model/business_hours_model.dart';
+
+import '../../../model/business_hours_model.dart';
 
 
 class BusinessHoursItem extends StatelessWidget {
